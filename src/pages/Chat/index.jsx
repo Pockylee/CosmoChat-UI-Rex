@@ -106,31 +106,33 @@ const Chat = () => {
     }
 
     return (
-        <Grid container spacing={2} style={{ padding: '16px' }}>
-        <Grid item xs={12}>
-            <form onSubmit={handleSubmit}>
-                <Textarea
-                    value={userPrompt}
-                    onChange={(e) => setUserPrompt(e.target.value)}
-                    placeholder="Type your message here..."
-                    fullWidth
-                    style={{ marginBottom: '16px' }}
-                />
-                <Button type="submit" variant="contained" color="primary">Send</Button>
-            </form>
+        <Grid container style={{ display: matches ? "none" : "black" }}>
+          <Grid style={{ padding: "40px 24px 24px 24px", positions: "sticky" }}>
+            <img src={Images.HomRex} alt="Rex" style={{ width: "105px" }} />
+          </Grid>
+          <Grid {...ChatStyles.textDisplayBackground}>
+            {ThisSessions?.chats?.map((chat, i) =>
+              Object.keys(chat).map((key) => key === "Rex" ? (
+                <RexMessage rexMessage = {chat.Rex} key = {"rex" + i} />
+              ):(
+                <UserMessage userMessage = {chat.user} key = {"user" + i} />
+              ))
+            )}
+          </Grid>
+          {ThisSessions && !ThisSessions.isSessionEnded ? (
+            <Grid>
+              <Textarea 
+              {...ChatStyles.textArea} 
+              name = "Soft"    
+              placeholder ="Soft"
+              variant ="soft"
+              onChange ={(e)=> setUserPrompt(e.target.value)}      
+              
+              />
+              </Grid>
+          ): null}
         </Grid>
-        <Grid item xs={12}>
-            <div>
-                {thisSession?.chats?.map((chat, index) => (
-                    <div key={index}>
-                        <UserMessage message={chat.user} />
-                        <RexMessage message={chat.Rex} />
-                    </div>
-                ))}
-            </div>
-        </Grid>
-    </Grid>
-);
+      );
 };
 
 export default Chat;

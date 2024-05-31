@@ -64,8 +64,22 @@ const Activity = () => {
               See All
             </Link>
           </Grid>
-          <Grid container item>
-            {loading ? <CircularProgress /> : <ChatHistory sessions={sessions} />}
+          <Grid container item>1
+            {loading ? (
+                <CircularProgress />
+                ) : (
+                sessions.map((session, i) =>
+                session.isSessionEnded && i<4 ? (
+                    <ChatHistory
+                    key={session.id}
+                    date={session.date}
+                    chats={session.chats}
+                    isSessionEnded={session.isSessionEnded}
+                    />
+                ) : 
+                    <></>
+                )
+            )}
           </Grid>
         </Grid>
       );
